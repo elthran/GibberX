@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
                         password.getText().toString().equals("pass")){
                             Toast.makeText(LoginActivity.this,"Username and password is correct",
                                     Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, UserActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
                         }
                         else {
