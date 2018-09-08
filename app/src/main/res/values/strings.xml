@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">GibberX</string>
+    <string name="login_text">Login Page</string>
+    <string name="username_text">Username</string>
+    <string name="password_text">Password</string>
+    <string name="attempt_text">Attempt</string>
+    <string name="login_button_text">Login</string>
+    <string name="login_welcome">You have logged in!</string>
+</resources>
