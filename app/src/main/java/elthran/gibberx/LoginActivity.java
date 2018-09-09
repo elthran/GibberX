@@ -36,8 +36,8 @@ public class LoginActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (username.getText().toString().equals("user") &&
-                        password.getText().toString().equals("pass")){
+                        if (username.getText().toString().equals("") &&
+                        password.getText().toString().equals("")){
                             Toast.makeText(LoginActivity.this,"Username and password is correct",
                                     Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);

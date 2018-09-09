@@ -17,9 +17,9 @@
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"/>
     <Button
-            android:text="@string/harry_potter"
+            android:text="@string/alice_in_wonderland"
             android:onClick="openBook"
-            android:tag="Harry Potter"
+            android:tag="Alice in Wonderland"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_choose_id2" app:layout_constraintStart_toStartOf="parent"
