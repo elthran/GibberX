@@ -107,6 +107,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
