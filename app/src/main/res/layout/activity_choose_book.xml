@@ -10,12 +10,23 @@
     <Button
             android:text="@string/the_little_prince"
             android:onClick="openBook"
-            android:tag="TheLittlePrince"
+            android:tag="The Little Prince"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_choose_id1" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"/>
+    <Button
+            android:text="@string/harry_potter"
+            android:onClick="openBook"
+            android:tag="Harry Potter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_choose_id2" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/button_choose_id1"
+            />
     <Button
             android:text="@string/return_to_reading_menu"
             android:onClick="returnToReadingMenu"
@@ -23,5 +34,5 @@
             android:layout_height="wrap_content"
             android:id="@+id/button2" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/button_choose_id1"/>
+            app:layout_constraintTop_toBottomOf="@+id/button_choose_id2"/>
 </android.support.constraint.ConstraintLayout>
