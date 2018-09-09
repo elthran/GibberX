@@ -11,4 +11,9 @@
     <string name="home_settings">Settings</string>
     <string name="home_log_out">Log Out</string>
     <string name="return_home">Return Home</string>
+    <string name="read_new_book">Read New Book</string>
+    <string name="continue_reading">Continue Reading</string>
+    <string name="review_words">Review Words</string>
+    <string name="the_little_prince">The Little Prince</string>
+    <string name="return_to_reading_menu">Return to Reading Menu</string>
 </resources>

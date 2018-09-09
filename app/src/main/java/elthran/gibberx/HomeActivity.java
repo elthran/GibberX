@@ -29,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void startReading(View view) {
-        Intent intent = new Intent(HomeActivity.this, ReadingActivity.class);
+        Intent intent = new Intent(HomeActivity.this, ReadingMenuActivity.class);
         startActivity(intent);
     }
 }
