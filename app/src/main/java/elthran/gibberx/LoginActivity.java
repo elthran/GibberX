@@ -10,15 +10,6 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -47,65 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void sendPost(String name, String password) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("https://gibberx.pythonanywhere.com/login");
-                    HttpURLConnection http = (HttpURLConnection) url.openConnection();
-                    http.setRequestMethod("POST");
-                    http.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    http.setRequestProperty("Accept","application/json");
-                    http.setDoOutput(true);
-                    http.setDoInput(true);
-
-                    JSONObject jsonParam = new JSONObject();
-                    try {
-                        jsonParam.put("username", name);
-                        jsonParam.put("password", password);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    Log.i("JSON", jsonParam.toString());
-                    try(DataOutputStream os = new DataOutputStream(http.getOutputStream())) {
-                        os.writeBytes(jsonParam.toString());
-                        os.flush();
-                    }
-
-                    Log.i("STATUS", String.valueOf(http.getResponseCode()));
-                    try {
-                        BufferedReader streamReader = new BufferedReader(new InputStreamReader(http.getInputStream(), "UTF-8"));
-                        StringBuilder responseStrBuilder = new StringBuilder();
-
-                        String inputStr;
-                        while ((inputStr = streamReader.readLine()) != null)
-                            responseStrBuilder.append(inputStr);
-                        try {
-                            JSONObject jsonObject = new JSONObject(responseStrBuilder.toString());
-                            Log.i("url response", jsonObject.toString());
-                            valid_login = jsonObject.getBoolean("login");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    } finally {
-                        http.disconnect();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,8 +57,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 User user = new User(1, username.getText().toString(), password.getText().toString());
-                sendPost(user.name, user.password);
-
+                String data = String.format("{'username': '%s', 'password': '%s'}", username.getText(), password.getText());
+                Request r = new Request("https://gibberx.pythonanywhere.com/login", data);
+                Log.i("status code", String.valueOf(r.status_code));
+                Log.i("json response", String.valueOf(r.json()));
+                valid_login = r.json().optBoolean("login");
                 if (valid_login) {
                     Toast.makeText(LoginActivity.this, "Username and password is correct",
                             Toast.LENGTH_SHORT).show();
