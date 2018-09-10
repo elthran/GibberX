@@ -1,9 +1,6 @@
 package elthran.gibberx;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,26 +14,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringJoiner;
-
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static EditText username;
-    private static EditText password;
-    private static TextView attempt;
-    private static Button login_button;
-    private Boolean valid_login;
+    private EditText username;
+    private EditText password;
+    private TextView attempt;
+    private Button login_button;
+    private Boolean valid_login = false;
     int attempt_counter = 5;
+
+    public void returnToCreateOrLogin(View view) {
+        Intent intent = new Intent(this, CreateOrLoginActivity.class);
+        startActivity(intent);
+    }
 
     public class User {
 
@@ -53,39 +49,34 @@ public class LoginActivity extends AppCompatActivity {
 
     public void sendPost(String name, String password) {
         Thread thread = new Thread(new Runnable() {
-            @TargetApi(Build.VERSION_CODES.N)
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://gibberx.pythonanywhere.com/login");
-                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-//                    urlConnection.setRequestProperty("Accept", "application/json");
-                    urlConnection.setRequestMethod("POST");
-                    urlConnection.setDoOutput(true);
+                    URL url = new URL("https://gibberx.pythonanywhere.com/login");
+                    HttpURLConnection http = (HttpURLConnection) url.openConnection();
+                    http.setRequestMethod("POST");
+                    http.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    http.setRequestProperty("Accept","application/json");
+                    http.setDoOutput(true);
+                    http.setDoInput(true);
 
-                    Map<String,String> arguments = new HashMap<>();
-                    arguments.put("username", name);
-                    arguments.put("password", password); // This is a fake password obviously
-                    StringJoiner sj = new StringJoiner("&");
-                    for(Map.Entry<String,String> entry : arguments.entrySet())
-                        sj.add(URLEncoder.encode(entry.getKey(), "UTF-8") + "="
-                                + URLEncoder.encode(entry.getValue(), "UTF-8"));
-                    byte[] out = sj.toString().getBytes(StandardCharsets.UTF_8);
-                    int length = out.length;
-
-                    urlConnection.setFixedLengthStreamingMode(length);
-                    urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-                    urlConnection.connect();
-                    try(OutputStream os = urlConnection.getOutputStream()) {
-                        os.write(out);
-                        os.flush();
-                        os.close();
+                    JSONObject jsonParam = new JSONObject();
+                    try {
+                        jsonParam.put("username", name);
+                        jsonParam.put("password", password);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
 
-                    Log.i("STATUS", String.valueOf(urlConnection.getResponseCode()));
+                    Log.i("JSON", jsonParam.toString());
+                    try(DataOutputStream os = new DataOutputStream(http.getOutputStream())) {
+                        os.writeBytes(jsonParam.toString());
+                        os.flush();
+                    }
+
+                    Log.i("STATUS", String.valueOf(http.getResponseCode()));
                     try {
-                        BufferedReader streamReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
+                        BufferedReader streamReader = new BufferedReader(new InputStreamReader(http.getInputStream(), "UTF-8"));
                         StringBuilder responseStrBuilder = new StringBuilder();
 
                         String inputStr;
@@ -99,14 +90,20 @@ public class LoginActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     } finally {
-                        urlConnection.disconnect();
+                        http.disconnect();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
+
         thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -127,7 +124,6 @@ public class LoginActivity extends AppCompatActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Boolean valid_login = true;
                 User user = new User(1, username.getText().toString(), password.getText().toString());
                 sendPost(user.name, user.password);
 
