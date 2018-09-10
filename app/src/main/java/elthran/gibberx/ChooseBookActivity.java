@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import static java.sql.DriverManager.println;
-
 public class ChooseBookActivity extends AppCompatActivity {
 
     @Override
