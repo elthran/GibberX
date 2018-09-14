@@ -19,12 +19,18 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/esting-20180911113807-deployment/amplify-cfn-templates/auth/cognito45d9483c-cloudformation-template.yml",
 				"logicalId": "authcognito45d9483c"
 			},
-			"lastPushTimeStamp": "2018-09-11T21:53:20.864Z",
+			"lastPushTimeStamp": "2018-09-12T23:57:25.260Z",
 			"output": {
 				"IdentityPoolId": "us-west-2:8fd53e60-8a86-4791-8ebf-d02cdb1d2df2",
-				"IdentityPoolName": "testingaws_identitypool_90211355"
+				"IdentityPoolName": "testingaws_identitypool_90211355",
+				"AppClientSecret": "r3k3r0a0dgim4mnb8s6ahgssfvtcbri2ov2v3720r0n15g255q5",
+				"UserPoolId": "us-west-2_qWq126DKE",
+				"AppClientIDWeb": "7pnecnps7qhjiqdstjlflmbgoe",
+				"AppClientID": "3d4etb8brc31bdilhgt0v9p7qe",
+				"UserPoolName": "cognito45d9483c_userpool_97a98f76"
 			},
-			"lastPushDirHash": "S0s8UNtEpzDF7jpubiubVGMqzQ0="
+			"lastPushDirHash": "8RWtFa1Dadoq239jzV2VndPz5lc=",
+			"[object Object]": {}
 		}
 	},
 	"analytics": {
@@ -35,7 +41,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/esting-20180911113807-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
 				"logicalId": "analyticstestingaws"
 			},
-			"lastPushTimeStamp": "2018-09-11T21:53:20.864Z",
+			"lastPushTimeStamp": "2018-09-12T23:57:25.253Z",
 			"output": {
 				"appName": "testingaws",
 				"Region": "us-east-1",
