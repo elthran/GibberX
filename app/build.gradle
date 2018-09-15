@@ -5,7 +5,7 @@ android {
     buildToolsVersion '27.0.3'
 
     defaultConfig {
-        applicationId "elthran.testingaws"
+        applicationId "elthran.gibberx"
         minSdkVersion 23
         targetSdkVersion 27
         versionCode 1
@@ -28,6 +28,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    repositories {
+        maven { url 'http://repo1.maven.org/maven2' }
+    }
 }
 
 dependencies {
@@ -35,6 +39,7 @@ dependencies {
     def constraint_version = '1.1.2'
     def lifecycle_version = '1.1.1'
     def paging_version = '1.0.1'
+    def testRulesVersion = '0.5'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$support_version"
@@ -56,4 +61,11 @@ dependencies {
 
     // Sign in UI Library
     implementation('com.amazonaws:aws-android-sdk-auth-ui:2.6.+@aar') { transitive = true }
+
+    // Pinpoint and Mobile Hub
+    implementation 'com.amazonaws:aws-android-sdk-pinpoint:2.6.+'
+
+    androidTestCompile 'junit:junit:4.12'
+    androidTestCompile "com.android.support.test:runner:$testRulesVersion"
+    androidTestCompile "com.android.support.test:rules:$testRulesVersion"
 }
