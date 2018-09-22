@@ -65,7 +65,7 @@ dependencies {
     // Pinpoint and Mobile Hub
     implementation 'com.amazonaws:aws-android-sdk-pinpoint:2.6.+'
 
-    androidTestCompile 'junit:junit:4.12'
-    androidTestCompile "com.android.support.test:runner:$testRulesVersion"
-    androidTestCompile "com.android.support.test:rules:$testRulesVersion"
+    androidTestImplementation 'junit:junit:4.12'
+    androidTestImplementation "com.android.support.test:runner:$testRulesVersion"
+    androidTestImplementation "com.android.support.test:rules:$testRulesVersion"
 }

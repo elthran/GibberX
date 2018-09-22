@@ -8,14 +8,8 @@ import com.amazonaws.mobile.auth.ui.SignInUI;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
-import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration;
-import com.amazonaws.mobileconnectors.pinpoint.PinpointManager;
 
 public class AuthenticatorActivity extends Activity {
-
-    public static PinpointManager pinpointManager;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,15 +24,6 @@ public class AuthenticatorActivity extends Activity {
                 Log.d("Notification", "User Signed In");
             }
         }).execute();
-
-        PinpointConfiguration config = new PinpointConfiguration(
-                AuthenticatorActivity.this,
-                AWSMobileClient.getInstance().getCredentialsProvider(),
-                AWSMobileClient.getInstance().getConfiguration()
-        );
-        pinpointManager = new PinpointManager(config);
-        pinpointManager.getSessionClient().startSession();
-        pinpointManager.getAnalyticsClient().submitEvents();
     }
 }
 
