@@ -47,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(CognitoUserDetails cognitoUserDetails) {
                 // The user detail are in cognitoUserDetails
+                String gender = cognitoUserDetails.getAttributes().getAttributes().get("gender");
+                String intellect = cognitoUserDetails.getAttributes().getAttributes().get("custom:intellect");
+                String level = cognitoUserDetails.getAttributes().getAttributes().get("custom:level");
+                Log.e("Gender", gender);
+                Log.e("Intellect", intellect);
+                Log.e("Level", level);
                 Log.e("GetDetailsinBackground", "success");
                 Log.e("DetailsList", String.valueOf(cognitoUserDetails));
             }
@@ -61,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         CognitoUserAttributes my_attributes = new CognitoUserAttributes();
-        my_attributes.addAttribute("gender", "male");
+        my_attributes.addAttribute("custom:girth", "fat");
+        Log.e("Attributes", String.valueOf(my_attributes.getAttributes()));
         UpdateAttributesHandler updateHandler = new UpdateAttributesHandler() {
             @Override
             public void onSuccess(List<CognitoUserCodeDeliveryDetails> attributesVerificationList) {
@@ -74,8 +81,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         cognitoUser.updateAttributesInBackground(my_attributes, updateHandler);
-
         Log.e("User Info", cognitoUser.toString());
+
+
 
 
 
