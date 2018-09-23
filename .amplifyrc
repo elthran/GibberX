@@ -1,14 +1,14 @@
 {
     "providers": {
         "awscloudformation": {
-            "AuthRoleName": "Cognito_GibberXAuth_Role",
-            "AuthRoleArn": "arn:aws:iam::571882937806:role/Cognito_GibberXAuth_Role",
-            "UnauthRoleName": "Cognito_GibberXUnauth_Role",
-            "UnauthRoleArn": "arn:aws:iam::571882937806:role/Cognito_GibberXUnauth_Role",
+            "AuthRoleName": "ibber-20180922103428-authRole",
+            "UnauthRoleArn": "arn:aws:iam::571882937806:role/ibber-20180922103428-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::571882937806:role/ibber-20180922103428-authRole",
             "Region": "us-east-1",
-            "DeploymentBucketName": "ibber-20180915110009-deployment",
-            "StackName": "ibber-20180915110009",
-            "StackId": "arn:aws:cloudformation:us-east-1:571882937806:stack/ibber-20180915110009/2fc06280-b911-11e8-87ae-500c5cc81217"
+            "DeploymentBucketName": "ibber-20180922103428-deployment",
+            "UnauthRoleName": "ibber-20180922103428-unauthRole",
+            "StackName": "ibber-20180922103428",
+            "StackId": "arn:aws:cloudformation:us-east-1:571882937806:stack/ibber-20180922103428/c3ae3400-be8d-11e8-8263-50d5cd1ea836"
         }
     }
 }
