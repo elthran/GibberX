@@ -7,11 +7,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.mobile.auth.core.IdentityHandler;
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
+import com.amazonaws.mobile.config.AWSConfiguration;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserPool;
+import com.amazonaws.regions.RegionUtils;
+import com.amazonaws.services.cognitoidentityprovider.AmazonCognitoIdentityProviderClient;
+import com.amazonaws.services.cognitoidentityprovider.model.ListUsersRequest;
+import com.amazonaws.services.cognitoidentityprovider.model.ListUsersResult;
+import com.amazonaws.services.cognitoidentityprovider.model.UserType;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,12 +31,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Create the logout button
-        Button clickButton = (Button) findViewById(R.id.button_logout);
+        Button logout_button = (Button) findViewById(R.id.button_logout);
         // Create the user display
         TextView userName = (TextView) findViewById(R.id.userDisplay);
         //String currentUserName = AWSMobileClient.defaultMobileClient().getIdentityManager().getIdentityProfile().getUserName();
         //userName.setText(currentUserName);
-
         AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler() {
             @Override
             public void onComplete(AWSStartupResult awsStartupResult) {
@@ -53,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         }).execute();
 
         // Create log out Button on click listener
-        clickButton.setOnClickListener( new View.OnClickListener() {
+        logout_button.setOnClickListener( new View.OnClickListener() {
 
             public void onClick(View v) {
                 IdentityManager.getDefaultIdentityManager().signOut();
@@ -61,5 +71,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        CognitoUserPool userPool = new CognitoUserPool(this, "us-east-1_E6Jjn1DY6", "26c1jmeli9go3gvc80pj0ld5bt",
+                "1oajk661no1dvs98a1dhetd5kmdsbftkcjjisv889ilta66npo4v");
+        CognitoUser cognitoUser = userPool.getCurrentUser();
+        Log.e("Print_User", String.valueOf(cognitoUser));
     }
 }
