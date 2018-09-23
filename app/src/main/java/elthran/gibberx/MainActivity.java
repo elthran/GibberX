@@ -7,11 +7,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.mobile.auth.core.IdentityHandler;
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
+import com.amazonaws.mobile.config.AWSConfiguration;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserPool;
+import com.amazonaws.regions.RegionUtils;
+import com.amazonaws.services.cognitoidentityprovider.AmazonCognitoIdentityProviderClient;
+import com.amazonaws.services.cognitoidentityprovider.model.ListUsersRequest;
+import com.amazonaws.services.cognitoidentityprovider.model.ListUsersResult;
+import com.amazonaws.services.cognitoidentityprovider.model.UserType;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,11 +31,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Create the logout button
-        Button clickButton = (Button) findViewById(R.id.button_logout);
+        Button logout_button = (Button) findViewById(R.id.button_logout);
         // Create the user display
         TextView userName = (TextView) findViewById(R.id.userDisplay);
-        //String currentUserName = AWSMobileClient.defaultMobileClient().getIdentityManager().getIdentityProfile().getUserName();
-        //userName.setText(currentUserName);
+        // Get the current user pool
+        CognitoUserPool userPool = new CognitoUserPool(this, IdentityManager.getDefaultIdentityManager().getConfiguration());
+        // Find the user from the user pool
+        CognitoUser cognitoUser = userPool.getCurrentUser();
+        // Get the user's username
+        String current_username = cognitoUser.getUserId();
 
         AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler() {
             @Override
@@ -41,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         // user ID is available from IdentityManager throughout your app
                         Log.d("MainActivity", "Identity ID is: " + s);
                         Log.d("MainActivity", "Cached Identity ID: " + IdentityManager.getDefaultIdentityManager().getCachedUserID());
-                        userName.setText(s);
+                        userName.setText(current_username);
                     }
 
                     @Override
@@ -53,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         }).execute();
 
         // Create log out Button on click listener
-        clickButton.setOnClickListener( new View.OnClickListener() {
+        logout_button.setOnClickListener( new View.OnClickListener() {
 
             public void onClick(View v) {
                 IdentityManager.getDefaultIdentityManager().signOut();
