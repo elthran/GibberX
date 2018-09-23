@@ -7,21 +7,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.mobile.auth.core.IdentityHandler;
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
-import com.amazonaws.mobile.config.AWSConfiguration;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserPool;
-import com.amazonaws.regions.RegionUtils;
-import com.amazonaws.services.cognitoidentityprovider.AmazonCognitoIdentityProviderClient;
-import com.amazonaws.services.cognitoidentityprovider.model.ListUsersRequest;
-import com.amazonaws.services.cognitoidentityprovider.model.ListUsersResult;
-import com.amazonaws.services.cognitoidentityprovider.model.UserType;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.*;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GenericHandler;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GetDetailsHandler;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.UpdateAttributesHandler;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.VerificationHandler;
 
+
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +38,48 @@ public class MainActivity extends AppCompatActivity {
         CognitoUser cognitoUser = userPool.getCurrentUser();
         // Get the user's username
         String current_username = cognitoUser.getUserId();
+
+
+
+
+        // Implement callback handler for getting details
+        GetDetailsHandler getDetailsHandler = new GetDetailsHandler() {
+            @Override
+            public void onSuccess(CognitoUserDetails cognitoUserDetails) {
+                // The user detail are in cognitoUserDetails
+                Log.e("GetDetailsinBackground", "success");
+                Log.e("DetailsList", String.valueOf(cognitoUserDetails));
+            }
+            @Override
+            public void onFailure(Exception exception) {
+                // Fetch user details failed, check exception for the cause
+                Log.e("GetDetailsinBackground", "failure");
+            }
+        };
+        // Fetch the user details
+        cognitoUser.getDetailsInBackground(getDetailsHandler);
+
+
+        CognitoUserAttributes my_attributes = new CognitoUserAttributes();
+        my_attributes.addAttribute("gender", "male");
+        UpdateAttributesHandler updateHandler = new UpdateAttributesHandler() {
+            @Override
+            public void onSuccess(List<CognitoUserCodeDeliveryDetails> attributesVerificationList) {
+                Log.e("UpdateList", String.valueOf(attributesVerificationList));
+                Log.e("Update", "success");
+            }
+            @Override
+            public void onFailure(Exception exception) {
+                Log.e("Update", "failure");
+            }
+        };
+        cognitoUser.updateAttributesInBackground(my_attributes, updateHandler);
+
+        Log.e("User Info", cognitoUser.toString());
+
+
+
+
 
         AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler() {
             @Override
@@ -68,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         }).execute();
 
         // Create log out Button on click listener
-        logout_button.setOnClickListener( new View.OnClickListener() {
+        logout_button.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 IdentityManager.getDefaultIdentityManager().signOut();

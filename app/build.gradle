@@ -67,6 +67,8 @@ dependencies {
 
     implementation 'com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.6.31'
 
+    //implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+
     androidTestImplementation 'junit:junit:4.12'
     androidTestImplementation "com.android.support.test:runner:$testRulesVersion"
     androidTestImplementation "com.android.support.test:rules:$testRulesVersion"

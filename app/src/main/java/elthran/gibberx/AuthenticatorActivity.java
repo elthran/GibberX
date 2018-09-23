@@ -9,6 +9,9 @@ import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
 
+//import com.facebook.FacebookSdk;
+//import com.facebook.appevents.AppEventsLogger;
+
 public class AuthenticatorActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
