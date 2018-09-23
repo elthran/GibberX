@@ -34,8 +34,13 @@ public class MainActivity extends AppCompatActivity {
         Button logout_button = (Button) findViewById(R.id.button_logout);
         // Create the user display
         TextView userName = (TextView) findViewById(R.id.userDisplay);
-        //String currentUserName = AWSMobileClient.defaultMobileClient().getIdentityManager().getIdentityProfile().getUserName();
-        //userName.setText(currentUserName);
+        // Get the current user pool
+        CognitoUserPool userPool = new CognitoUserPool(this, IdentityManager.getDefaultIdentityManager().getConfiguration());
+        // Find the user from the user pool
+        CognitoUser cognitoUser = userPool.getCurrentUser();
+        // Get the user's username
+        String current_username = cognitoUser.getUserId();
+
         AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler() {
             @Override
             public void onComplete(AWSStartupResult awsStartupResult) {
@@ -51,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         // user ID is available from IdentityManager throughout your app
                         Log.d("MainActivity", "Identity ID is: " + s);
                         Log.d("MainActivity", "Cached Identity ID: " + IdentityManager.getDefaultIdentityManager().getCachedUserID());
-                        userName.setText(s);
+                        userName.setText(current_username);
                     }
 
                     @Override
@@ -71,10 +76,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        CognitoUserPool userPool = new CognitoUserPool(this, "us-east-1_E6Jjn1DY6", "26c1jmeli9go3gvc80pj0ld5bt",
-                "1oajk661no1dvs98a1dhetd5kmdsbftkcjjisv889ilta66npo4v");
-        CognitoUser cognitoUser = userPool.getCurrentUser();
-        Log.e("Print_User", String.valueOf(cognitoUser));
     }
 }
