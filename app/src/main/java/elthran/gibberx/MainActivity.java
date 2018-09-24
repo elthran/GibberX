@@ -13,13 +13,9 @@ import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.*;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GenericHandler;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GetDetailsHandler;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.UpdateAttributesHandler;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.VerificationHandler;
 
-
-import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,55 +34,44 @@ public class MainActivity extends AppCompatActivity {
         CognitoUser cognitoUser = userPool.getCurrentUser();
         // Get the user's username
         String current_username = cognitoUser.getUserId();
+        // Implement callback handler for adding/changing attributes
+        UpdateAttributesHandler updateAttributesHandler = new UpdateAttributesHandler() {
+            @Override
+            public void onSuccess(List<CognitoUserCodeDeliveryDetails> attributesVerificationList) {
+                Log.e("updateAttributesHandler", "success");
+            }
 
-
-
-
-        // Implement callback handler for getting details
-        GetDetailsHandler getDetailsHandler = new GetDetailsHandler() {
+            @Override
+            public void onFailure(Exception exception) {
+                Log.e("updateAttributesHandler", "failure");
+            }
+        };
+        // Check current level. Set it to one if non-existant
+        GetDetailsHandler checkLevelHandler = new GetDetailsHandler() {
             @Override
             public void onSuccess(CognitoUserDetails cognitoUserDetails) {
-                // The user detail are in cognitoUserDetails
-                String gender = cognitoUserDetails.getAttributes().getAttributes().get("gender");
-                String intellect = cognitoUserDetails.getAttributes().getAttributes().get("custom:intellect");
-                String level = cognitoUserDetails.getAttributes().getAttributes().get("custom:level");
-                Log.e("Gender", gender);
-                Log.e("Intellect", intellect);
-                Log.e("Level", level);
-                Log.e("GetDetailsinBackground", "success");
-                Log.e("DetailsList", String.valueOf(cognitoUserDetails));
+                // Create an empty attribute class
+                CognitoUserAttributes check_level = new CognitoUserAttributes();
+                // Add attributes to be changed to the class
+                check_level.addAttribute("custom:level", "1");
+                if (cognitoUserDetails.getAttributes().getAttributes().get("custom:level") == null) {
+                    cognitoUser.updateAttributesInBackground(check_level, updateAttributesHandler);
+                    Log.e("checkLevelHandler", "Level non-existant. Setting to 1.");
+                } else if (Integer.parseInt(cognitoUserDetails.getAttributes().getAttributes().get("custom:level")) < 1) {
+                    cognitoUser.updateAttributesInBackground(check_level, updateAttributesHandler);
+                    Log.e("checkLevelHandler", "Level below 1. Setting to 1.");
+                } else {
+                    Log.e("checkLevelHandler", "Level is fine. Passing");
+                }
             }
             @Override
             public void onFailure(Exception exception) {
                 // Fetch user details failed, check exception for the cause
-                Log.e("GetDetailsinBackground", "failure");
+                Log.e("checkLevelHandler", "failure");
             }
         };
-        // Fetch the user details
-        cognitoUser.getDetailsInBackground(getDetailsHandler);
-
-
-        CognitoUserAttributes my_attributes = new CognitoUserAttributes();
-        my_attributes.addAttribute("custom:girth", "fat");
-        Log.e("Attributes", String.valueOf(my_attributes.getAttributes()));
-        UpdateAttributesHandler updateHandler = new UpdateAttributesHandler() {
-            @Override
-            public void onSuccess(List<CognitoUserCodeDeliveryDetails> attributesVerificationList) {
-                Log.e("UpdateList", String.valueOf(attributesVerificationList));
-                Log.e("Update", "success");
-            }
-            @Override
-            public void onFailure(Exception exception) {
-                Log.e("Update", "failure");
-            }
-        };
-        cognitoUser.updateAttributesInBackground(my_attributes, updateHandler);
-        Log.e("User Info", cognitoUser.toString());
-
-
-
-
-
+        // Run the level checker
+        cognitoUser.getDetailsInBackground(checkLevelHandler);
 
 
         AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler() {
