@@ -25,7 +25,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Create the logout button
-        Button logout_button = (Button) findViewById(R.id.button_logout);
+        Button button_logout = (Button) findViewById(R.id.button_logout);
+        // Create the menu read button
+        Button button_read = (Button) findViewById(R.id.button_read);
         // Create the user display
         TextView userName = (TextView) findViewById(R.id.userDisplay);
         // Get the current user pool
@@ -100,9 +102,16 @@ public class MainActivity extends AppCompatActivity {
             }
         }).execute();
 
-        // Create log out Button on click listener
-        logout_button.setOnClickListener(new View.OnClickListener() {
+        // Create Button on click listener for reading abook
+        button_read.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ReadMenuActivity.class);
+                startActivity(intent);
+            }
+        });
 
+        // Create log out Button on click listener
+        button_logout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 IdentityManager.getDefaultIdentityManager().signOut();
                 Intent intent = new Intent(MainActivity.this, AuthenticatorActivity.class);
