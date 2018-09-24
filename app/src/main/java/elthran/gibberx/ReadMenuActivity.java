@@ -12,8 +12,6 @@ public class ReadMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_menu);
-        // Create the logout button
-        Button button_logout = (Button) findViewById(R.id.button_logout);
         // Create the menu read button
         Button button_read = (Button) findViewById(R.id.button_read);
         // Create the menu read button
@@ -30,16 +28,7 @@ public class ReadMenuActivity extends AppCompatActivity {
         // Create Button on click listener for reading abook
         button_main_menu.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(ReadMenuActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        // Create log out Button on click listener
-        button_logout.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                IdentityManager.getDefaultIdentityManager().signOut();
-                Intent intent = new Intent(ReadMenuActivity.this, AuthenticatorActivity.class);
+                Intent intent = new Intent(ReadMenuActivity.this, MainMenuActivity.class);
                 startActivity(intent);
             }
         });

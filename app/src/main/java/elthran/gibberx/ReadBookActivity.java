@@ -50,7 +50,7 @@ public class ReadBookActivity extends AppCompatActivity {
         // Create Button on click listener for reading abook
         button_main_menu.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(ReadBookActivity.this, MainActivity.class);
+                Intent intent = new Intent(ReadBookActivity.this, MainMenuActivity.class);
                 startActivity(intent);
             }
         });
