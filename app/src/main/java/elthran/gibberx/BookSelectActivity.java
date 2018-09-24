@@ -21,9 +21,13 @@ public class BookSelectActivity extends AppCompatActivity {
         int number_of_books = 2; // Should be the level of the user
         LinearLayout ll = (LinearLayout)findViewById(R.id.linear_layout);
 
-        for (int i = 1; i <= number_of_books; i++) {
+        ArrayList<String> book_list = new ArrayList<String>();
+        book_list.add("Alice in Wonderland");
+        book_list.add("The Little Prince");
+
+        for (int i = 0; i < number_of_books; i++) {
             Button myButton = new Button(this);
-            myButton.setText(String.format("Alice in Wonderland%d", i));
+            myButton.setText(book_list.get(i));
             myButton.setId(i);
             myButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             ll.addView(myButton);
