@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BookSelectActivity extends AppCompatActivity {
 
@@ -18,12 +19,11 @@ public class BookSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_book_select);
 
         int number_of_books = 2; // Should be the level of the user
-
         LinearLayout ll = (LinearLayout)findViewById(R.id.linear_layout);
 
         for (int i = 1; i <= number_of_books; i++) {
             Button myButton = new Button(this);
-            myButton.setText("Button :"+i);
+            myButton.setText(String.format("Alice in Wonderland%d", i));
             myButton.setId(i);
             myButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             ll.addView(myButton);
