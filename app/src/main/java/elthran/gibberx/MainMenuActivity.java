@@ -28,6 +28,8 @@ public class MainMenuActivity extends AppCompatActivity {
         Button button_logout = (Button) findViewById(R.id.button_logout);
         // Create the menu read button
         Button button_read = (Button) findViewById(R.id.button_read);
+        // Create the menu read button
+        Button button_word_list = (Button) findViewById(R.id.check_words);
         // Create the user display
         TextView userName = (TextView) findViewById(R.id.userDisplay);
         // Get the current user pool
@@ -36,7 +38,6 @@ public class MainMenuActivity extends AppCompatActivity {
         CognitoUser cognitoUser = userPool.getCurrentUser();
         // Get the user's username
         String current_username = cognitoUser.getUserId();
-
         // Implement callback handler for adding/changing attributes
         UpdateAttributesHandler updateAttributesHandler = new UpdateAttributesHandler() {
             @Override
@@ -62,9 +63,9 @@ public class MainMenuActivity extends AppCompatActivity {
                 check_permissions.addAttribute("custom:words_unlocked", "1");
                 if ((books_unlocked == null) || (Integer.parseInt(books_unlocked) < 1)) {
                     cognitoUser.updateAttributesInBackground(check_permissions, updateAttributesHandler);
-                    Log.e("checkLevelHandler", "Attribute books_unlocked being set to 1.");
+                    Log.e("checkLevelHandler-books", "Attribute books_unlocked being set to 1.");
                 } else {
-                    Log.e("checkLevelHandler", "Attribute books_unlocked passed test");
+                    Log.e("checkLevelHandler-words", "Attribute books_unlocked passed test");
                 }
                 if ((words_unlocked == null) || (Integer.parseInt(words_unlocked) < 1)) {
                     cognitoUser.updateAttributesInBackground(check_permissions, updateAttributesHandler);
@@ -77,6 +78,7 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onFailure(Exception exception) {
                 // Fetch user details failed, check exception for the cause
                 Log.e("checkLevelHandler", "failure");
+                Log.e("checkLevelHandler", String.valueOf(exception));
             }
         };
 
@@ -116,6 +118,15 @@ public class MainMenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Create Button on click listener for reading abook
+        button_word_list.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainMenuActivity.this, CheckWordListActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         // Create log out Button on click listener
         button_logout.setOnClickListener(new View.OnClickListener() {
