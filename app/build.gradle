@@ -63,7 +63,7 @@ dependencies {
     implementation('com.amazonaws:aws-android-sdk-auth-ui:2.6.+@aar') { transitive = true }
 
     // Pinpoint and Mobile Hub
-    implementation 'com.amazonaws:aws-android-sdk-pinpoint:2.6.+'
+    implementation 'com.amazonaws:aws-android-sdk-pinpoint:2.6.31'
 
     implementation 'com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.6.31'
 

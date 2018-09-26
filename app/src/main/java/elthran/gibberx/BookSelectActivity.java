@@ -7,25 +7,54 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
+import com.amazonaws.mobile.auth.core.IdentityManager;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserDetails;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserPool;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GetDetailsHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookSelectActivity extends AppCompatActivity {
-
-
-    @Override
+   @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_select);
 
-        int number_of_books = 2; // Should be the level of the user
-        LinearLayout ll = (LinearLayout)findViewById(R.id.linear_layout);
+        // Get the current user pool
+        CognitoUserPool userPool = new CognitoUserPool(this, IdentityManager.getDefaultIdentityManager().getConfiguration());
+        // Find the user from the user pool
+        CognitoUser cognitoUser = userPool.getCurrentUser();
 
+        cognitoUser.getDetailsInBackground(getDetailsHandler);
+
+    }
+
+    GetDetailsHandler getDetailsHandler = new GetDetailsHandler() {
+        @Override
+        public void onSuccess(CognitoUserDetails cognitoUserDetails) {
+
+            int numOfBooks = Integer.parseInt(cognitoUserDetails.getAttributes().getAttributes().get("custom:books_unlocked"));
+            Log.e("Book amount:", "success start");
+            createButtons(numOfBooks);
+            Log.e("Book amount:", "success finish");
+        }
+
+        @Override
+        public void onFailure(Exception exception) {
+            Log.e("Book amount:", "failure");
+        }
+    };
+
+
+    private void createButtons(int numberOfBooks) {
+        LinearLayout ll = (LinearLayout)findViewById(R.id.linear_layout);
         ArrayList<String> book_list = new ArrayList<String>();
         book_list.add("Alice in Wonderland");
         book_list.add("The Little Prince");
 
-        for (int i = 0; i < number_of_books; i++) {
+        for (int i = 0; i < numberOfBooks; i++) {
             Button myButton = new Button(this);
             myButton.setText(book_list.get(i));
             myButton.setId(i);
@@ -41,6 +70,5 @@ public class BookSelectActivity extends AppCompatActivity {
                 }
             });
         }
-
     }
 }
