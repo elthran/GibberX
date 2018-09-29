@@ -28,13 +28,11 @@ public class BookSelectActivity extends AppCompatActivity {
         CognitoUser cognitoUser = userPool.getCurrentUser();
 
         cognitoUser.getDetailsInBackground(getDetailsHandler);
-
     }
 
     GetDetailsHandler getDetailsHandler = new GetDetailsHandler() {
         @Override
         public void onSuccess(CognitoUserDetails cognitoUserDetails) {
-
             int numOfBooks = Integer.parseInt(cognitoUserDetails.getAttributes().getAttributes().get("custom:books_unlocked"));
             Log.e("Book amount:", "success start");
             createButtons(numOfBooks);
@@ -49,12 +47,14 @@ public class BookSelectActivity extends AppCompatActivity {
 
 
     private void createButtons(int numberOfBooks) {
+        TextView book_count = findViewById(R.id.book_count);
         LinearLayout ll = (LinearLayout)findViewById(R.id.linear_layout);
         ArrayList<String> book_list = new ArrayList<String>();
-        book_list.add("Alice in Wonderland");
         book_list.add("The Little Prince");
+        book_list.add("Alice in Wonderland");
+        book_count.setText(String.valueOf(numberOfBooks));
 
-        for (int i = 0; i < numberOfBooks; i++) {
+        for (int i = 0; (i < numberOfBooks && i < book_list.size()); i++) {
             Button myButton = new Button(this);
             myButton.setText(book_list.get(i));
             myButton.setId(i);

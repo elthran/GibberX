@@ -3,6 +3,7 @@ package elthran.gibberx;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,10 +40,12 @@ public class ReadBookActivity extends AppCompatActivity {
             StringBuilder text = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
+                line = line.replaceAll(" I ", "<b> Ich </b>");
+                line = line.replaceAll("I ", "<b>Ich </b>");
                 text.append(line);
                 text.append('\n');
             }
-            book_text.setText(text);
+            book_text.setText(Html.fromHtml(String.valueOf(text)));
         } catch (IOException e) {
             Log.e("BookError", "Eror loading book");
         }

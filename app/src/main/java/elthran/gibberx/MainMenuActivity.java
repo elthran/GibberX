@@ -29,7 +29,6 @@ public class MainMenuActivity extends AppCompatActivity {
         Button button_word_list = findViewById(R.id.check_words);
         // Create the user display
         TextView userName = findViewById(R.id.userDisplay);
-        TextView booksUnlockedTextView = findViewById(R.id.booksUnlocked);
         // Get the current user pool
         CognitoUserPool userPool = new CognitoUserPool(this, IdentityManager.getDefaultIdentityManager().getConfiguration());
         // Find the user from the user pool

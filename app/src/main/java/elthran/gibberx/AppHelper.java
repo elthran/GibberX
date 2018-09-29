@@ -14,27 +14,23 @@ import java.util.List;
 class CustomUpdateAttributesHandler implements UpdateAttributesHandler {
     @Override
     public void onSuccess(List<CognitoUserCodeDeliveryDetails> attributesVerificationList) {
-            Log.e("updateAttributesHandler", "success");
+        Log.e("updateAttributesHandler", "success");
     }
-
     @Override
     public void onFailure(Exception exception) {
-            Log.e("updateAttributesHandler", "failure");
+        Log.e("updateAttributesHandler", "failure");
     }
 }
 
 class PermissionsDetailsHandler implements GetDetailsHandler {
     private CognitoUser cognitoUser;
-
     PermissionsDetailsHandler(CognitoUser cognitoUser) {
         this.cognitoUser = cognitoUser;
     }
-
     @Override
     public void onSuccess(CognitoUserDetails cognitoUserDetails) {
         // Create an empty attribute class
         CognitoUserAttributes checkPermissions = cognitoUserDetails.getAttributes();
-
         final String booksUnlocked = checkPermissions.getAttributes().get("custom:books_unlocked");
         final String wordsUnlocked = checkPermissions.getAttributes().get("custom:words_unlocked");
         // Add attributes to be changed to the class
@@ -51,8 +47,6 @@ class PermissionsDetailsHandler implements GetDetailsHandler {
         } else {
             Log.e("checkLevelHandler", "Attribute words_unlocked passed test");
         }
-
-
         CustomUpdateAttributesHandler customUpdateAttributesHandler = new CustomUpdateAttributesHandler();
         cognitoUser.updateAttributesInBackground(checkPermissions, customUpdateAttributesHandler);
     }
