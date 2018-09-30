@@ -30,13 +30,12 @@ class PermissionsDetailsHandler implements GetDetailsHandler {
     @Override
     public void onSuccess(CognitoUserDetails cognitoUserDetails) {
         // Create an empty attribute class
-        CognitoUserAttributes checkPermissions = cognitoUserDetails.getAttributes();
+        CognitoUserAttributes checkPermissions = new CognitoUserAttributes();
         final String booksUnlocked = checkPermissions.getAttributes().get("custom:books_unlocked");
         final String wordsUnlocked = checkPermissions.getAttributes().get("custom:words_unlocked");
         // Add attributes to be changed to the class
         if ((booksUnlocked == null) || (Integer.parseInt(booksUnlocked) < 1)) {
             checkPermissions.addAttribute("custom:books_unlocked", "1");
-
             Log.e("checkLevelHandler-books", "Attribute books_unlocked being set to 1.");
         } else {
             Log.e("checkLevelHandler-words", "Attribute books_unlocked passed test");
