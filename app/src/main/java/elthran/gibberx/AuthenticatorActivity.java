@@ -9,6 +9,9 @@ import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
 
+//import com.facebook.FacebookSdk;
+//import com.facebook.appevents.AppEventsLogger;
+
 public class AuthenticatorActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +23,7 @@ public class AuthenticatorActivity extends Activity {
             @Override
             public void onComplete(AWSStartupResult awsStartupResult) {
                 SignInUI signin = (SignInUI) AWSMobileClient.getInstance().getClient(AuthenticatorActivity.this, SignInUI.class);
-                signin.login(AuthenticatorActivity.this, MainActivity.class).execute();
+                signin.login(AuthenticatorActivity.this, MainMenuActivity.class).execute();
                 Log.d("Notification", "User Signed In");
             }
         }).execute();

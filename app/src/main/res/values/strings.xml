@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">GibberX</string>
     <string name="log_out">Log Out</string>
+    <string name="read_book">Read Book</string>
+    <string name="choose_book">Choose Book</string>
+    <string name="return_to_main_menu">Return to Main Menu</string>
+    <string name="english_german">English / German</string>
 </resources>
