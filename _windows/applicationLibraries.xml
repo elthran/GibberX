@@ -1,5 +1,40 @@
 <application>
   <component name="libraryTable">
+    <library name="Python 3.6 (Starcraft) interpreter library">
+      <CLASSES>
+        <root url="file://C:/Python36/DLLs" />
+        <root url="file://C:/Python36/Lib" />
+        <root url="file://C:/Python36" />
+        <root url="file://C:/PythonProjects/Starcraft" />
+        <root url="file://C:/PythonProjects/Starcraft/Lib/site-packages" />
+        <root url="jar://C:/PythonProjects/Starcraft/Lib/site-packages/setuptools-39.1.0-py3.6.egg!/" />
+        <root url="file://C:/PythonProjects/Starcraft/Lib/site-packages/pip-10.0.1-py3.6.egg" />
+        <root url="file://$USER_HOME$/.IdeaIC2018.2/system/python_stubs/357025385" />
+        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/python-skeletons" />
+        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/stdlib/3.4" />
+        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/stdlib/3" />
+        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/stdlib/2and3" />
+        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/third_party/3" />
+        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/third_party/2and3" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="file://C:/Python36/DLLs" />
+        <root url="file://C:/Python36/Lib" />
+        <root url="file://C:/Python36" />
+        <root url="file://C:/PythonProjects/Starcraft" />
+        <root url="file://C:/PythonProjects/Starcraft/Lib/site-packages" />
+        <root url="jar://C:/PythonProjects/Starcraft/Lib/site-packages/setuptools-39.1.0-py3.6.egg!/" />
+        <root url="file://C:/PythonProjects/Starcraft/Lib/site-packages/pip-10.0.1-py3.6.egg" />
+        <root url="file://$USER_HOME$/.IdeaIC2018.2/system/python_stubs/357025385" />
+        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/python-skeletons" />
+        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/stdlib/3.4" />
+        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/stdlib/3" />
+        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/stdlib/2and3" />
+        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/third_party/3" />
+        <root url="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/typeshed/third_party/2and3" />
+      </SOURCES>
+    </library>
     <library name="Python 3.6 interpreter library">
       <CLASSES>
         <root url="file://C:/Python36/DLLs" />
